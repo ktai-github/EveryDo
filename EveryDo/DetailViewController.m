@@ -30,6 +30,18 @@
   // Update the user interface for the detail item.
   if (self.detailItem) {
       self.detailDescriptionLabel.text = [self.detailItem description];
+    self.titleLabel.text = [self.detailItem title];
+    self.toDoDescriptionLabel.text = [self.detailItem toDoDescription];
+    self.toDoDescriptionLabel.numberOfLines = 0;
+    [self.toDoDescriptionLabel sizeToFit];
+    self.priorityLabel.text = [NSString stringWithFormat:@"priority %d", [self.detailItem priorityNumber]];
+    
+    if ([self.detailItem isCompleted] == TRUE) {
+      self.isCompletedLabel.text = @"done";
+    } else {
+      self.isCompletedLabel.text = @"to do";
+    }
+
   }
 }
 

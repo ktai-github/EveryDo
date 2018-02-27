@@ -54,21 +54,21 @@
   
   ToDoItem *toDoItem1 = [[ToDoItem alloc] init];
   toDoItem1.title = @"file taxes";
-  toDoItem1.toDoDescription = @"with a tax software";
+  toDoItem1.toDoDescription = @"with a tax software \nand need to do this by end of april";
   toDoItem1.priorityNumber = 2;
   toDoItem1.isCompleted = NO;
   [self.objects addObject:toDoItem1];
   
   ToDoItem *toDoItem2 = [[ToDoItem alloc] init];
   toDoItem2.title = @"floor hockey";
-  toDoItem2.toDoDescription = @"register for floor hockey";
+  toDoItem2.toDoDescription = @"register for floor hockey \nand maybe win a championship";
   toDoItem2.priorityNumber = 3;
   toDoItem2.isCompleted = NO;
   [self.objects addObject:toDoItem2];
   
   ToDoItem *toDoItem3 = [[ToDoItem alloc] init];
   toDoItem3.title = @"contact dev friend";
-  toDoItem3.toDoDescription = @"arrange a meeting with him";
+  toDoItem3.toDoDescription = @"arrange a meeting with him \nand pick his brain about how to make money";
   toDoItem3.priorityNumber = 2;
   toDoItem3.isCompleted = YES;
   [self.objects addObject:toDoItem3];
@@ -97,9 +97,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   if ([[segue identifier] isEqualToString:@"showDetail"]) {
       NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-      NSDate *object = self.objects[indexPath.row];
-      DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
-      [controller setDetailItem:object];
+//      NSDate *object = self.objects[indexPath.row];
+    ToDoItem *toDoItem = self.objects[indexPath.row];
+      DetailViewController *detailVC = (DetailViewController *)[segue destinationViewController];
+      [detailVC setDetailItem:toDoItem];
   }
 }
 
@@ -127,8 +128,14 @@
   ToDoItem *toDoItem = [self.objects objectAtIndex:indexPath.row];
   tableViewCell.title.text = toDoItem.title;
   tableViewCell.toDoDescription.text = toDoItem.toDoDescription;
-  tableViewCell.priority.text = [NSString stringWithFormat:@"%d", toDoItem.priorityNumber];
-  tableViewCell.isCompleted.text = [NSString stringWithFormat:@"%i", toDoItem.isCompleted];
+  tableViewCell.priority.text = [NSString stringWithFormat:@"priority %d", toDoItem.priorityNumber];
+  
+  if (toDoItem.isCompleted == TRUE) {
+    tableViewCell.isCompleted.text = @"done";
+  } else {
+    tableViewCell.isCompleted.text = @"to do";
+  }
+//  [NSString stringWithFormat:@"%i", ];
   return tableViewCell;
 }
 
