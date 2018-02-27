@@ -11,7 +11,7 @@
 #import "ToDoItem.h"
 #import "TableViewCell.h"
 
-@interface MasterViewController () 
+@interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property NSMutableArray *objects;
 @end
@@ -27,33 +27,53 @@
   self.navigationItem.rightBarButtonItem = addButton;
   
   [self addInitialData];
+  //self.tableView.delegate = self;
+  //self.tableView.dataSource = self;
+  
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  
+  return self.objects.count;
+  
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//
+//}
+
 - (void) addInitialData {
+  self.objects = [[NSMutableArray alloc] init];
+  
   ToDoItem *toDoItem1 = [[ToDoItem alloc] init];
   toDoItem1.title = @"file taxes";
   toDoItem1.toDoDescription = @"with a tax software";
   toDoItem1.priorityNumber = 2;
   toDoItem1.isCompleted = NO;
-  [self.objects arrayByAddingObject:toDoItem1];
+  [self.objects addObject:toDoItem1];
   
   ToDoItem *toDoItem2 = [[ToDoItem alloc] init];
   toDoItem2.title = @"floor hockey";
   toDoItem2.toDoDescription = @"register for floor hockey";
   toDoItem2.priorityNumber = 3;
   toDoItem2.isCompleted = NO;
-  [self.objects arrayByAddingObject:toDoItem2];
+  [self.objects addObject:toDoItem2];
   
   ToDoItem *toDoItem3 = [[ToDoItem alloc] init];
   toDoItem3.title = @"contact dev friend";
   toDoItem3.toDoDescription = @"arrange a meeting with him";
   toDoItem3.priorityNumber = 2;
   toDoItem3.isCompleted = YES;
-  [self.objects arrayByAddingObject:toDoItem3];
+  [self.objects addObject:toDoItem3];
+  
+  NSLog(@"%lu", self.objects.count);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,17 +111,25 @@
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return self.objects.count;
-}
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//  return self.objects.count;
+//}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+//  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-  NSDate *object = self.objects[indexPath.row];
-  cell.textLabel.text = [object description];
-  return cell;
+//  NSDate *object = self.objects[indexPath.row];
+//  cell.textLabel.text = [object description];
+//  return cell;
+  
+  TableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+  ToDoItem *toDoItem = [self.objects objectAtIndex:indexPath.row];
+  tableViewCell.title.text = toDoItem.title;
+  tableViewCell.toDoDescription.text = toDoItem.toDoDescription;
+  tableViewCell.priority.text = [NSString stringWithFormat:@"%d", toDoItem.priorityNumber];
+  tableViewCell.isCompleted.text = [NSString stringWithFormat:@"%i", toDoItem.isCompleted];
+  return tableViewCell;
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "TableViewCell.h"
+#import "ToDoItem.h"
 
 @interface TableViewCell () 
 
@@ -15,6 +16,8 @@
 @end
 
 @implementation TableViewCell
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
