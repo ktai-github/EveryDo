@@ -12,7 +12,7 @@
 #import "TableViewCell.h"
 #import "AddViewController.h"
 
-@interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MasterViewController () <UITableViewDataSource, UITableViewDelegate, AddViewControllerDelegate>
 
 @property NSMutableArray *objects;
 @end
@@ -29,14 +29,36 @@
   
   
   [self addInitialData];
+  
+  UISwipeGestureRecognizer *swipeCellRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToRightWithGestureRecognizer:)];
+  swipeCellRight.direction = UISwipeGestureRecognizerDirectionRight;
+  
+//  UISwipeGestureRecognizer *swipeLeftWhite = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideToLeftWithGestureRecognizer:)];
+//  swipeLeftWhite.direction = UISwipeGestureRecognizerDirectionLeft;
+  
+  [self.tableView addGestureRecognizer:swipeCellRight];
+//  TableViewCell *tableViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:[self.tableView indexPathForSelectedRow]];
+//  [tableViewCell addGestureRecognizer:swipeCellRight];
+
   //self.tableView.delegate = self;
   //self.tableView.dataSource = self;
   
 }
 
+- (void) swipeToRightWithGestureRecognizer: (UISwipeGestureRecognizer *) gestureRecognizer {
+  
+  NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[gestureRecognizer locationInView:self.tableView]];
+  TableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPath];
+  NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:tableViewCell.title.text];
+  [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                            value:@2
+                            range:NSMakeRange(0, [attributeString length])];
+  tableViewCell.title.attributedText = attributeString;
+}
 
 -(void)addButtonTapped:(id)sender{
   [self performSegueWithIdentifier:@"addSegue" sender:sender];
+  
 }
 
 
@@ -88,16 +110,27 @@
   // Dispose of any resources that can be recreated.
 }
 
-
-- (void)insertNewObject:(id)sender {
-  
+- (void)AddViewController:(AddViewController *)viewController didAddNewToDoItem:(ToDoItem *)toDoItem {
   if (!self.objects) {
-      self.objects = [[NSMutableArray alloc] init];
+    self.objects = [[NSMutableArray alloc] init];
   }
-//  [self.objects insertObject:[NSDate date] atIndex:0];
+  //  [self.objects insertObject:[NSDate date] atIndex:0];
+//  [self.objects insertObject:toDoItem atIndex:0];
+  [self.objects insertObject:toDoItem atIndex:0];
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
 }
+//- (void)insertNewObject:(id)sender {
+//  
+//  if (!self.objects) {
+//      self.objects = [[NSMutableArray alloc] init];
+//  }
+////  [self.objects insertObject:[NSDate date] atIndex:0];
+//  [self.objects insertObject: atIndex:0]
+//  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//  [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//}
 
 
 #pragma mark - Segues
@@ -110,14 +143,17 @@
       DetailViewController *detailVC = (DetailViewController *)[segue destinationViewController];
       [detailVC setDetailItem:toDoItem];
   }
-//  if ([[segue identifier] isEqualToString:@"addSegue"]) {
+  if ([[segue identifier] isEqualToString:@"addSegue"]) {
+    
+    AddViewController *addVC = segue.destinationViewController;
+    addVC.delegate = self;
 //    UINavigationController *nav = segue.destinationViewController;
 //    AddItemViewController *addVC = nav.viewControllers[0];
 //    addVC.delegate = self;
 //    UINavigationController *nav = segue.destinationViewController;
 //    AddViewController *addVC = nav.viewControllers[0];
     
-//  }
+  }
 }
 
 
@@ -148,6 +184,11 @@
   
   if (toDoItem.isCompleted == TRUE) {
     tableViewCell.isCompleted.text = @"done";
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:tableViewCell.title.text];
+    [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                            value:@2
+                            range:NSMakeRange(0, [attributeString length])];
+    tableViewCell.title.attributedText = attributeString;
   } else {
     tableViewCell.isCompleted.text = @"to do";
   }

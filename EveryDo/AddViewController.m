@@ -7,15 +7,33 @@
 //
 
 #import "AddViewController.h"
+#import "MasterViewController.h"
 #import "ToDoItem.h"
 
-@interface AddViewController ()
+//@protocol AddViewControllerDelegate <NSObject>
+//
+//- (void)AddViewController:(AddViewController *)viewController didAddNewToDoItem:(ToDoItem *)toDoItem;
+//
+//@end
 
-@end
+//@interface AddViewController ()
+//
+//@end
 
 @implementation AddViewController
 
 - (IBAction)save:(id)sender {
+  ToDoItem *toDoItem = [[ToDoItem alloc] init];
+  toDoItem.title = self.addToDoTitleTextField.text;
+  toDoItem.toDoDescription = self.addToDoDescriptionTextField.text;
+  toDoItem.priorityNumber = [self.addPriorityTextField.text intValue];
+  toDoItem.isCompleted = [self.addIsCompletedTextField.text boolValue];
+  
+  [self.delegate AddViewController:self didAddNewToDoItem:toDoItem];
+  [[self navigationController] popViewControllerAnimated:YES];
+}
+//(UIPanGestureRecognizer *)sender
+- (IBAction)cellSwipedRight:(UISwipeGestureRecognizer *)sender {
   
 }
 
