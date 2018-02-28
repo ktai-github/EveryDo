@@ -16,6 +16,7 @@
 		2CD7990B2045EC200078786D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7990A2045EC200078786D /* main.m */; };
 		2CD799132045F0EF0078786D /* ToDoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD799122045F0EF0078786D /* ToDoItem.m */; };
 		2CD799162045F4D50078786D /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD799152045F4D50078786D /* TableViewCell.m */; };
+		2CD7991920461D420078786D /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7991820461D420078786D /* AddViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		2CD799122045F0EF0078786D /* ToDoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoItem.m; sourceTree = "<group>"; };
 		2CD799142045F4D50078786D /* TableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
 		2CD799152045F4D50078786D /* TableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		2CD7991720461D420078786D /* AddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
+		2CD7991820461D420078786D /* AddViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,8 @@
 				2CD799122045F0EF0078786D /* ToDoItem.m */,
 				2CD798FB2045EC200078786D /* MasterViewController.h */,
 				2CD798FC2045EC200078786D /* MasterViewController.m */,
+				2CD7991720461D420078786D /* AddViewController.h */,
+				2CD7991820461D420078786D /* AddViewController.m */,
 				2CD798FE2045EC200078786D /* DetailViewController.h */,
 				2CD798FF2045EC200078786D /* DetailViewController.m */,
 				2CD799012045EC200078786D /* Main.storyboard */,
@@ -160,6 +165,7 @@
 				2CD798FD2045EC200078786D /* MasterViewController.m in Sources */,
 				2CD799162045F4D50078786D /* TableViewCell.m in Sources */,
 				2CD799132045F0EF0078786D /* ToDoItem.m in Sources */,
+				2CD7991920461D420078786D /* AddViewController.m in Sources */,
 				2CD798FA2045EC200078786D /* AppDelegate.m in Sources */,
 				2CD7990B2045EC200078786D /* main.m in Sources */,
 				2CD799002045EC200078786D /* DetailViewController.m in Sources */,

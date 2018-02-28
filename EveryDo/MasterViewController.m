@@ -10,6 +10,7 @@
 #import "DetailViewController.h"
 #import "ToDoItem.h"
 #import "TableViewCell.h"
+#import "AddViewController.h"
 
 @interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,13 +24,19 @@
   // Do any additional setup after loading the view, typically from a nib.
   self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-  UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+  UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
   self.navigationItem.rightBarButtonItem = addButton;
+  
   
   [self addInitialData];
   //self.tableView.delegate = self;
   //self.tableView.dataSource = self;
   
+}
+
+
+-(void)addButtonTapped:(id)sender{
+  [self performSegueWithIdentifier:@"addSegue" sender:sender];
 }
 
 
@@ -83,10 +90,11 @@
 
 
 - (void)insertNewObject:(id)sender {
+  
   if (!self.objects) {
       self.objects = [[NSMutableArray alloc] init];
   }
-  [self.objects insertObject:[NSDate date] atIndex:0];
+//  [self.objects insertObject:[NSDate date] atIndex:0];
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -102,6 +110,14 @@
       DetailViewController *detailVC = (DetailViewController *)[segue destinationViewController];
       [detailVC setDetailItem:toDoItem];
   }
+//  if ([[segue identifier] isEqualToString:@"addSegue"]) {
+//    UINavigationController *nav = segue.destinationViewController;
+//    AddItemViewController *addVC = nav.viewControllers[0];
+//    addVC.delegate = self;
+//    UINavigationController *nav = segue.destinationViewController;
+//    AddViewController *addVC = nav.viewControllers[0];
+    
+//  }
 }
 
 
